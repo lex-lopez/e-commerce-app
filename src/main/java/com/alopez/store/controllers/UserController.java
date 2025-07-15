@@ -4,11 +4,15 @@ import com.alopez.store.dtos.ChangePasswordRequest;
 import com.alopez.store.dtos.RegisterUserRequest;
 import com.alopez.store.dtos.UpdateUserRequest;
 import com.alopez.store.dtos.UserDto;
-import com.alopez.store.mappers.UserMapper;
-import com.alopez.store.repositories.UserRepository;
+import com.alopez.store.exceptions.EmailAlreadyExistsException;
+import com.alopez.store.exceptions.UserNotAuthorizedException;
+import com.alopez.store.exceptions.UserNotFoundException;
+import com.alopez.store.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,100 +20,89 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/users")
+@Tag(name = "Users", description = "Operations for users")
 public class UserController {
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
+    private final UserService userService;
 
     @GetMapping
+    @Operation(summary = "Gets all users")
     public List<UserDto> getAllUsers(
+            @Parameter(description = "Sort by name or email", example = "name")
             @RequestParam(name = "sort", required = false, defaultValue = "") String sort
     ) {
-        if (!Set.of("name", "email").contains(sort)) {
-            sort = "name";
-        }
-        return userRepository.findAll(Sort.by(sort))
-                .stream()
-                .map(userMapper::toDto)
-                .toList();
+       return userService.getAllUsers(sort);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
-        var user = userRepository.findById(id).orElse(null);
-        if ( user == null ) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(userMapper.toDto(user));
+    @Operation(summary = "Gets a user by id")
+    public ResponseEntity<UserDto> getUserById(
+            @Parameter(description = "The id of the user", required = true)
+            @PathVariable Long id
+    ) {
+        var userDto = userService.getUserById(id);
+        return ResponseEntity.ok(userDto);
     }
 
     @PostMapping
-    public ResponseEntity<?> registerUser(
+    @Operation(summary = "Registers a new user")
+    public ResponseEntity<UserDto> registerUser(
             @Valid @RequestBody RegisterUserRequest request,
             UriComponentsBuilder uriBuilder
     ) {
-        if (userRepository.existsByEmail(request.getEmail())) {
-            return ResponseEntity.badRequest().body(
-                    Map.of("email", "Email is already registered!")
-            );
-        }
-
-        var user = userMapper.toEntity(request);
-        userRepository.save(user);
-
-        var userDto = userMapper.toDto(user);
+        var userDto = userService.createUser(request);
         var uri = uriBuilder.path("/users/{id}").buildAndExpand(userDto.getId()).toUri();
         return ResponseEntity.created(uri).body(userDto);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Updates a user")
     public ResponseEntity<UserDto> updateUser(
+            @Parameter(description = "The id of the user", required = true)
             @PathVariable(name = "id") Long id,
-            @RequestBody UpdateUserRequest request
+            @Valid @RequestBody UpdateUserRequest request
     ) {
-        var user = userRepository.findById(id).orElse(null);
-
-        if (user == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        userMapper.update(request, user);
-        userRepository.save(user);
-        return ResponseEntity.ok(userMapper.toDto(user));
+        var userDto = userService.updateUser(id, request);
+        return ResponseEntity.ok(userDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        var user = userRepository.findById(id).orElse(null);
-        if (user == null) {
-            return ResponseEntity.notFound().build();
-        }
-        userRepository.delete(user);
+    @Operation(summary = "Deletes a user")
+    public ResponseEntity<Void> deleteUser(
+            @Parameter(description = "The id of the user", required = true)
+            @PathVariable Long id
+    ) {
+        userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{id}/change-password")
+    @Operation(summary = "Changes the password of a user")
     public ResponseEntity<Void> changePassword(
+            @Parameter(description = "The id of the user", required = true)
             @PathVariable Long id,
             @RequestBody ChangePasswordRequest request
     ) {
-        var user = userRepository.findById(id).orElse(null);
-        if (user == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        if (!user.getPassword().equals(request.getOldPassword())) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        user.setPassword(request.getNewPassword());
-        userRepository.save(user);
-
+        userService.changePassword(id, request.getOldPassword(), request.getNewPassword());
         return ResponseEntity.noContent().build();
     }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleUserNotFound() {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "User not found!"));
+    }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<Map<String, String>> handleEmailAlreadyExists() {
+        return ResponseEntity.badRequest().body(Map.of("error", "Email is already registered!"));
+    }
+
+    @ExceptionHandler(UserNotAuthorizedException.class)
+    public ResponseEntity<Map<String, String>> handleUserNotAuthorized() {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "User not authorized!"));
+    }
+
 }

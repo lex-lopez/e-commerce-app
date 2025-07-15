@@ -1,102 +1,87 @@
 package com.alopez.store.controllers;
 
 import com.alopez.store.dtos.ProductDto;
-import com.alopez.store.entities.Product;
-import com.alopez.store.mappers.ProductMapper;
-import com.alopez.store.repositories.CategoryRepository;
-import com.alopez.store.repositories.ProductRepository;
+import com.alopez.store.exceptions.CategoryNotFoundException;
+import com.alopez.store.exceptions.ProductNotFoundException;
+import com.alopez.store.services.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/products")
+@Tag(name = "Products", description = "Operations for products")
 public class ProductController {
-
-    private final ProductRepository productRepository;
-    private final ProductMapper productMapper;
-    private final CategoryRepository categoryRepository;
+    private final ProductService productService;
 
     @GetMapping
+    @Operation(summary = "Gets all products")
     public List<ProductDto> getAllProducts(
+            @Parameter(description = "Filter products by category id")
             @RequestParam(name = "categoryId", required = false) Byte categoryId
     ) {
-        List<Product> products;
-        if (categoryId != null) {
-            products = productRepository.findByCategoryId(categoryId);
-        } else {
-            products = productRepository.findAllWithCategory();
-        }
-
-        return products.stream()
-                .map(productMapper::toDto)
-                .toList();
+        return productService.getAllProducts(categoryId);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDto> getProductById(@PathVariable Long id) {
-        var product = productRepository.findById(id).orElse(null);
-        if ( product == null ) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(productMapper.toDto(product));
+    @Operation(summary = "Gets a product by id")
+    public ResponseEntity<ProductDto> getProductById(
+            @Parameter(description = "The id of the product", required = true)
+            @PathVariable Long id
+    ) {
+        var productDto = productService.getProductById(id);
+        return ResponseEntity.ok(productDto);
     }
 
     @PostMapping
+    @Operation(summary = "Creates a new product")
     public ResponseEntity<ProductDto> createProduct(
-            @RequestBody ProductDto productDto,
+            @RequestBody ProductDto request,
             UriComponentsBuilder uriBuilder
     ) {
-        var category = categoryRepository.findById(productDto.getCategoryId()).orElse(null);
-
-        if (category == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        var product = productMapper.toEntity(productDto);
-        product.setCategory(category);
-        productRepository.save(product);
-
-        productDto.setId(product.getId());
-        var uri = uriBuilder.path("/products/{id}").buildAndExpand(product.getId()).toUri();
+        var productDto = productService.createProduct(request);
+        var uri = uriBuilder.path("/products/{id}").buildAndExpand(productDto.getId()).toUri();
         return ResponseEntity.created(uri).body(productDto);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Updates a product")
     public ResponseEntity<ProductDto> updateProduct(
+            @Parameter(description = "The id of the product", required = true)
             @PathVariable Long id,
-            @RequestBody ProductDto productDto
+            @RequestBody ProductDto request
     ) {
-        var product = productRepository.findById(id).orElse(null);
-        if (product == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        var category = categoryRepository.findById(productDto.getCategoryId()).orElse(null);
-        if (category == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        productMapper.update(productDto, product);
-        product.setCategory(category);
-        productRepository.save(product);
-
-        productDto.setId(product.getId());
+        var productDto = productService.updateProduct(id, request);
         return ResponseEntity.ok(productDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        var product = productRepository.findById(id).orElse(null);
-        if (product == null) {
-            return ResponseEntity.notFound().build();
-        }
-        productRepository.delete(product);
+    @Operation(summary = "Deletes a product")
+    public ResponseEntity<Void> deleteProduct(
+            @Parameter(description = "The id of the product", required = true)
+            @PathVariable Long id
+    ) {
+        productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
     }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleProductNotFound() {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Product not found!"));
+    }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleCategoryNotFound() {
+        return ResponseEntity.badRequest().body(Map.of("error", "Category not found!"));
+    }
+
 }
