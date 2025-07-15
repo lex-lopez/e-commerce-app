@@ -20,7 +20,7 @@ import java.util.Set;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
