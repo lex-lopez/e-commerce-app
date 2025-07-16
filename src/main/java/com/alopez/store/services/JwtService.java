@@ -1,5 +1,6 @@
 package com.alopez.store.services;
 
+import com.alopez.store.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -14,11 +15,13 @@ public class JwtService {
     @Value("${spring.jwt.secret}")
     private String secret;
 
-    public String generateToken(String email) {
+    public String generateToken(User user) {
         final long tokenExpiration = 1000 * 60 * 60 * 24; // 1 day
 
         return Jwts.builder()
-                .subject(email)
+                .subject(user.getId().toString())
+                .claim("name", user.getName())
+                .claim("email", user.getEmail())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + tokenExpiration))
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()), Jwts.SIG.HS512)
@@ -34,8 +37,8 @@ public class JwtService {
         }
     }
 
-    public String getEmailFromToken(String token) {
-        return getClaims(token).getSubject();
+    public Long getUserIdFromToken(String token) {
+        return Long.valueOf(getClaims(token).getSubject());
     }
 
     private Claims getClaims(String token) {
