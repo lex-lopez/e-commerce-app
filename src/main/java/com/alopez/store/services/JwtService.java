@@ -1,39 +1,34 @@
 package com.alopez.store.services;
 
+import com.alopez.store.config.JwtConfig;
 import com.alopez.store.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+@AllArgsConstructor
 @Service
 public class JwtService {
-    @Value("${spring.jwt.secret}")
-    private String secret;
+    private final JwtConfig jwtConfig;
 
-    public String generateToken(User user) {
-        final long tokenExpiration = 1000 * 60 * 60 * 24; // 1 day
-
-        return Jwts.builder()
-                .subject(user.getId().toString())
-                .claim("name", user.getName())
-                .claim("email", user.getEmail())
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + tokenExpiration))
-                .signWith(Keys.hmacShaKeyFor(secret.getBytes()), Jwts.SIG.HS512)
-                .compact();
+    public String generateAccessToken(User user) {
+        return generateToken(user, jwtConfig.getAccessTokenTTL());
     }
 
-    public boolean validateToken(String token) {
+    public String generateRefreshToken(User user) {
+        return generateToken(user, jwtConfig.getRefreshTokenTTL());
+    }
+
+    public boolean isTokenExpired(String token) {
         try {
             var claims = getClaims(token);
-            return claims.getExpiration().after(new Date());
+            return claims.getExpiration().before(new Date());
         } catch (JwtException e) {
-            return false;
+            return true;
         }
     }
 
@@ -43,9 +38,20 @@ public class JwtService {
 
     private Claims getClaims(String token) {
         return Jwts.parser()
-                .verifyWith(Keys.hmacShaKeyFor(secret.getBytes()))
+                .verifyWith(jwtConfig.getSecretKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
+    }
+
+    private String generateToken(User user, long tokenExpiration) {
+        return Jwts.builder()
+                .subject(user.getId().toString())
+                .claim("name", user.getName())
+                .claim("email", user.getEmail())
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + (tokenExpiration * 1000)))
+                .signWith(jwtConfig.getSecretKey(), Jwts.SIG.HS512)
+                .compact();
     }
 }
