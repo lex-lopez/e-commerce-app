@@ -3,6 +3,7 @@ package com.alopez.store.services;
 import com.alopez.store.dtos.RegisterUserRequest;
 import com.alopez.store.dtos.UpdateUserRequest;
 import com.alopez.store.dtos.UserDto;
+import com.alopez.store.entities.Role;
 import com.alopez.store.exceptions.EmailAlreadyExistsException;
 import com.alopez.store.exceptions.UserNotAuthorizedException;
 import com.alopez.store.exceptions.UserNotFoundException;
@@ -49,6 +50,7 @@ public class UserService {
 
         var user = userMapper.toEntity(request);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.USER);
         userRepository.save(user);
 
         return userMapper.toDto(user);
