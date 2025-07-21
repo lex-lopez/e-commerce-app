@@ -15,25 +15,21 @@ import java.util.Date;
 public class JwtService {
     private final JwtConfig jwtConfig;
 
-    public String generateAccessToken(User user) {
+    public Jwt generateAccessToken(User user) {
         return generateToken(user, jwtConfig.getAccessTokenTTL());
     }
 
-    public String generateRefreshToken(User user) {
+    public Jwt generateRefreshToken(User user) {
         return generateToken(user, jwtConfig.getRefreshTokenTTL());
     }
 
-    public boolean isTokenExpired(String token) {
+    public Jwt parseToken(String token) {
         try {
             var claims = getClaims(token);
-            return claims.getExpiration().before(new Date());
+            return new Jwt(claims, jwtConfig.getSecretKey());
         } catch (JwtException e) {
-            return true;
+            return null;
         }
-    }
-
-    public Long getUserIdFromToken(String token) {
-        return Long.valueOf(getClaims(token).getSubject());
     }
 
     private Claims getClaims(String token) {
@@ -44,15 +40,16 @@ public class JwtService {
                 .getPayload();
     }
 
-    private String generateToken(User user, long tokenExpiration) {
-        return Jwts.builder()
+    private Jwt generateToken(User user, long tokenExpiration) {
+        var claims = Jwts.claims()
                 .subject(user.getId().toString())
-                .claim("name", user.getName())
-                .claim("email", user.getEmail())
-                .claim("role", user.getRole())
+                .add("name", user.getName())
+                .add("email", user.getEmail())
+                .add("role", user.getRole())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + (tokenExpiration * 1000)))
-                .signWith(jwtConfig.getSecretKey(), Jwts.SIG.HS512)
-                .compact();
+                .build();
+
+        return new Jwt(claims, jwtConfig.getSecretKey());
     }
 }

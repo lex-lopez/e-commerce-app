@@ -1,5 +1,6 @@
 package com.alopez.store.config;
 
+import com.alopez.store.entities.Role;
 import com.alopez.store.filters.JwtAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -54,14 +55,19 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable) // Disable CSRF
             .authorizeHttpRequests(c -> c // Authorize
                     .requestMatchers("/api/carts/**").permitAll()
+                    .requestMatchers("/api/admin/**").hasRole(Role.ADMIN.name())
                     .requestMatchers(HttpMethod.POST,"/api/users").permitAll()
                     .requestMatchers(HttpMethod.POST,"/api/auth/login").permitAll()
                     .requestMatchers(HttpMethod.POST,"/api/auth/refresh").permitAll()
                     .anyRequest().authenticated()
             )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling( c ->
-                        c.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)));
+                .exceptionHandling( c -> {
+                    c.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+                    c.accessDeniedHandler((request, response, accessDeniedException) -> {
+                        response.setStatus(HttpStatus.FORBIDDEN.value());
+                    });
+                });
 
         return http.build();
     }
