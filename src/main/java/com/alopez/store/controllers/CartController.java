@@ -4,9 +4,6 @@ import com.alopez.store.dtos.*;
 import com.alopez.store.exceptions.CartNotFoundException;
 import com.alopez.store.exceptions.ProductNotFoundException;
 import com.alopez.store.services.CartService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,33 +16,23 @@ import java.util.UUID;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/carts")
-@Tag(name = "Carts", description = "Operations for shop carts")
 public class CartController {
     private final CartService cartService;
 
     @GetMapping("/{cartId}")
-    @Operation(summary = "Gets a shop cart by id")
-    public CartDto getCart(
-            @Parameter(description = "The id of the shop cart", required = true)
-            @PathVariable("cartId") UUID cartId
-    ) {
+    public CartDto getCart(@PathVariable("cartId") UUID cartId) {
         return cartService.getCart(cartId);
     }
 
     @PostMapping
-    @Operation(summary = "Creates a new shop cart")
-    public ResponseEntity<CartDto> createCart(
-            UriComponentsBuilder uriBuilder
-    ) {
+    public ResponseEntity<CartDto> createCart(UriComponentsBuilder uriBuilder) {
         var cartDto = cartService.createCart();
         var uri = uriBuilder.path("/api/cart/{id}").buildAndExpand(cartDto.getId()).toUri();
         return ResponseEntity.created(uri).body(cartDto);
     }
 
     @PostMapping("/{cartId}/items")
-    @Operation(summary = "Adds a product to the shop cart")
     public ResponseEntity<CartItemDto> addProductToCart(
-            @Parameter(description = "The id of the shop cart", required = true)
             @PathVariable("cartId") UUID cartId,
             @RequestBody AddItemToCartRequest request
     ) {
@@ -54,11 +41,8 @@ public class CartController {
     }
 
     @PutMapping("/{cartId}/items/{productId}")
-    @Operation(summary = "Updates the quantity of a product in the shop cart")
     public CartItemDto updateItemInCart(
-            @Parameter(description = "The id of the shop cart", required = true)
             @PathVariable("cartId") UUID cartId,
-            @Parameter(description = "The id of the product", required = true)
             @PathVariable("productId") Long productId,
             @Valid @RequestBody UpdateCartItemRequest request
     ) {
@@ -66,11 +50,8 @@ public class CartController {
     }
 
     @DeleteMapping("/{cartId}/items/{productId}")
-    @Operation(summary = "Removes a product from the shop cart")
     public ResponseEntity<Void> removeItemFromCart(
-            @Parameter(description = "The id of the shop cart", required = true)
             @PathVariable("cartId") UUID cartId,
-            @Parameter(description = "The id of the product", required = true)
             @PathVariable("productId") Long productId
     ) {
         cartService.removeItemFromCart(cartId, productId);
@@ -78,22 +59,18 @@ public class CartController {
     }
 
     @DeleteMapping("/{cartId}/items")
-    @Operation(summary = "Clears the shop cart")
-    public ResponseEntity<Void> clearCart(
-            @Parameter(description = "The id of the shop cart", required = true)
-            @PathVariable("cartId") UUID cartId
-    ) {
+    public ResponseEntity<Void> clearCart(@PathVariable("cartId") UUID cartId) {
         cartService.clearCart(cartId);
         return ResponseEntity.noContent().build();
     }
 
     @ExceptionHandler(CartNotFoundException.class)
-    public ResponseEntity<ErrorDto> handleCartNotFound() {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorDto("Cart not found!"));
+    public ResponseEntity<ErrorDto> handleCartNotFound(Exception e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorDto(e.getMessage()));
     }
 
     @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<ErrorDto> handleProductNotFound() {
-        return ResponseEntity.badRequest().body(new ErrorDto("Product not found in the cart!"));
+    public ResponseEntity<ErrorDto> handleProductNotFound(Exception e) {
+        return ResponseEntity.badRequest().body(new ErrorDto(e.getMessage()));
     }
 }

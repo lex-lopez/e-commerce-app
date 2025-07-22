@@ -9,6 +9,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/*
+ This filter is only for debugging purposes to verify the request being made and the status
+ */
 @Component
 public class LoggingFilter extends OncePerRequestFilter {
     @Override
