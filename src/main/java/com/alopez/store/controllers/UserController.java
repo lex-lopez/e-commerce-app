@@ -1,9 +1,6 @@
 package com.alopez.store.controllers;
 
-import com.alopez.store.dtos.ChangePasswordRequest;
-import com.alopez.store.dtos.RegisterUserRequest;
-import com.alopez.store.dtos.UpdateUserRequest;
-import com.alopez.store.dtos.UserDto;
+import com.alopez.store.dtos.*;
 import com.alopez.store.exceptions.EmailAlreadyExistsException;
 import com.alopez.store.exceptions.UserNotAuthorizedException;
 import com.alopez.store.exceptions.UserNotFoundException;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -91,18 +87,18 @@ public class UserController {
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleUserNotFound() {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "User not found!"));
+    public ResponseEntity<ErrorDto> handleUserNotFound() {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorDto("User not found!"));
     }
 
     @ExceptionHandler(EmailAlreadyExistsException.class)
-    public ResponseEntity<Map<String, String>> handleEmailAlreadyExists() {
-        return ResponseEntity.badRequest().body(Map.of("error", "Email is already registered!"));
+    public ResponseEntity<ErrorDto> handleEmailAlreadyExists() {
+        return ResponseEntity.badRequest().body(new ErrorDto("Email is already registered!"));
     }
 
     @ExceptionHandler(UserNotAuthorizedException.class)
-    public ResponseEntity<Map<String, String>> handleUserNotAuthorized() {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "User not authorized!"));
+    public ResponseEntity<ErrorDto> handleUserNotAuthorized() {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorDto("User not authorized!"));
     }
 
 }
