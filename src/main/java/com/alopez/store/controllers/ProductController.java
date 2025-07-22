@@ -75,13 +75,13 @@ public class ProductController {
     }
 
     @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<ErrorDto> handleProductNotFound() {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorDto("Product not found!"));
+    public ResponseEntity<ErrorDto> handleProductNotFound(Exception e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorDto(e.getMessage()));
     }
 
     @ExceptionHandler(CategoryNotFoundException.class)
-    public ResponseEntity<ErrorDto> handleCategoryNotFound() {
-        return ResponseEntity.badRequest().body(new ErrorDto("Category not found!"));
+    public ResponseEntity<ErrorDto> handleCategoryNotFound(Exception e) {
+        return ResponseEntity.badRequest().body(new ErrorDto(e.getMessage()));
     }
 
 }
