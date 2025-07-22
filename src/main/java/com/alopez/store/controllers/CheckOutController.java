@@ -7,11 +7,14 @@ import com.alopez.store.exceptions.CartEmptyException;
 import com.alopez.store.exceptions.CartNotFoundException;
 import com.alopez.store.exceptions.PaymentException;
 import com.alopez.store.services.CheckOutService;
+import com.alopez.store.services.WebhookRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @AllArgsConstructor
 @RestController
@@ -25,6 +28,14 @@ public class CheckOutController {
     ) {
         var checkOutResponse = checkOutService.checkOut(request);
         return ResponseEntity.ok(checkOutResponse);
+    }
+
+    @PostMapping("/webhook")
+    public void handleWebhook(
+            @RequestHeader Map<String, String> headers,
+            @RequestBody String payload
+    ){
+        checkOutService.handleWebhookEvent(new WebhookRequest(headers, payload));
     }
 
     @ExceptionHandler({ CartNotFoundException.class, CartEmptyException.class })

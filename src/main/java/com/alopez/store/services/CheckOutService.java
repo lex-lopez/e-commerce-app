@@ -9,10 +9,10 @@ import com.alopez.store.exceptions.PaymentException;
 import com.alopez.store.repositories.CartRepository;
 import com.alopez.store.repositories.OrderRepository;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 public class CheckOutService {
     private final CartRepository cartRepository;
@@ -45,5 +45,15 @@ public class CheckOutService {
             orderRepository.delete(order);
             throw ex;
         }
+    }
+
+    public void handleWebhookEvent(WebhookRequest request) {
+        paymentGateway
+                .parseWebhookRequest(request)
+                .ifPresent( paymentResult -> {
+                    var order = orderRepository.findById(paymentResult.getOrderId()).orElseThrow();
+                    order.setStatus(paymentResult.getPaymentStatus());
+                    orderRepository.save(order);
+                });
     }
 }
