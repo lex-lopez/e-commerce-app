@@ -33,6 +33,6 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private User customer;
 
-    @OneToMany(mappedBy = "order")
-    private Set<OrderItems> items = new HashSet<>();
+    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
+    private Set<OrderItem> items = new HashSet<>();
 }

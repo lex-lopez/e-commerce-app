@@ -5,6 +5,6 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class JwtResponse {
-    private String token;
+public class CheckOutResponse {
+    private Long orderId;
 }
