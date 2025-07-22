@@ -1,5 +1,6 @@
 package com.alopez.store.controllers;
 
+import com.alopez.store.dtos.ErrorDto;
 import com.alopez.store.dtos.ProductDto;
 import com.alopez.store.exceptions.CategoryNotFoundException;
 import com.alopez.store.exceptions.ProductNotFoundException;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -75,13 +75,13 @@ public class ProductController {
     }
 
     @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleProductNotFound() {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Product not found!"));
+    public ResponseEntity<ErrorDto> handleProductNotFound() {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorDto("Product not found!"));
     }
 
     @ExceptionHandler(CategoryNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleCategoryNotFound() {
-        return ResponseEntity.badRequest().body(Map.of("error", "Category not found!"));
+    public ResponseEntity<ErrorDto> handleCategoryNotFound() {
+        return ResponseEntity.badRequest().body(new ErrorDto("Category not found!"));
     }
 
 }
