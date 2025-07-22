@@ -6,8 +6,8 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,7 +34,11 @@ public class Order {
     private User customer;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
-    private Set<OrderItem> items = new HashSet<>();
+    private List<OrderItem> items = new ArrayList<>();
+
+    public boolean isPlacedBy(User customer) {
+        return this.customer.equals(customer);
+    }
 
     public static Order fromCart(Cart cart, User customer) {
         var order = new Order();
