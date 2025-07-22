@@ -1,4 +1,4 @@
-package com.alopez.store.exceptions;
+package com.alopez.store.payments.exceptions;
 
 import lombok.NoArgsConstructor;
 

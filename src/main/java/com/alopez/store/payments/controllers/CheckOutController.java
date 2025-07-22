@@ -1,13 +1,13 @@
-package com.alopez.store.controllers;
+package com.alopez.store.payments.controllers;
 
-import com.alopez.store.dtos.CheckOutRequest;
-import com.alopez.store.dtos.CheckOutResponse;
 import com.alopez.store.dtos.ErrorDto;
 import com.alopez.store.exceptions.CartEmptyException;
 import com.alopez.store.exceptions.CartNotFoundException;
-import com.alopez.store.exceptions.PaymentException;
-import com.alopez.store.services.CheckOutService;
-import com.alopez.store.services.WebhookRequest;
+import com.alopez.store.payments.dtos.CheckOutRequest;
+import com.alopez.store.payments.dtos.CheckOutResponse;
+import com.alopez.store.payments.exceptions.PaymentException;
+import com.alopez.store.payments.services.CheckOutService;
+import com.alopez.store.payments.services.WebhookRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.alopez.store.config;
+package com.alopez.store.payments.config;
 
 import com.stripe.Stripe;
 import jakarta.annotation.PostConstruct;

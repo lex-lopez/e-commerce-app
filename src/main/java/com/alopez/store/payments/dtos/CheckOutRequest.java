@@ -1,4 +1,4 @@
-package com.alopez.store.dtos;
+package com.alopez.store.payments.dtos;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

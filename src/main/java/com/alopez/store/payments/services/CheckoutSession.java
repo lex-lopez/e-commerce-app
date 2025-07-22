@@ -1,4 +1,4 @@
-package com.alopez.store.services;
+package com.alopez.store.payments.services;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

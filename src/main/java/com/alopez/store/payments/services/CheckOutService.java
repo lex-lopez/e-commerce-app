@@ -1,13 +1,15 @@
-package com.alopez.store.services;
+package com.alopez.store.payments.services;
 
-import com.alopez.store.dtos.CheckOutRequest;
-import com.alopez.store.dtos.CheckOutResponse;
+import com.alopez.store.payments.dtos.CheckOutRequest;
+import com.alopez.store.payments.dtos.CheckOutResponse;
 import com.alopez.store.entities.Order;
 import com.alopez.store.exceptions.CartEmptyException;
 import com.alopez.store.exceptions.CartNotFoundException;
-import com.alopez.store.exceptions.PaymentException;
+import com.alopez.store.payments.exceptions.PaymentException;
 import com.alopez.store.repositories.CartRepository;
 import com.alopez.store.repositories.OrderRepository;
+import com.alopez.store.services.AuthService;
+import com.alopez.store.services.CartService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

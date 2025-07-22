@@ -1,9 +1,9 @@
-package com.alopez.store.services;
+package com.alopez.store.payments.services;
 
 import com.alopez.store.entities.Order;
 import com.alopez.store.entities.OrderItem;
 import com.alopez.store.entities.PaymentStatus;
-import com.alopez.store.exceptions.PaymentException;
+import com.alopez.store.payments.exceptions.PaymentException;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Event;
