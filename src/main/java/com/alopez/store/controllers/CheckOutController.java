@@ -3,7 +3,7 @@ package com.alopez.store.controllers;
 import com.alopez.store.dtos.CheckOutRequest;
 import com.alopez.store.dtos.CheckOutResponse;
 import com.alopez.store.dtos.ErrorDto;
-import com.alopez.store.exceptions.CartIsEmptyException;
+import com.alopez.store.exceptions.CartEmptyException;
 import com.alopez.store.exceptions.CartNotFoundException;
 import com.alopez.store.services.CheckOutService;
 import jakarta.validation.Valid;
@@ -25,13 +25,8 @@ public class CheckOutController {
         return ResponseEntity.ok(checkOutResponse);
     }
 
-    @ExceptionHandler(CartNotFoundException.class)
-    public ResponseEntity<ErrorDto> handleCartNotFound() {
-        return ResponseEntity.badRequest().body(new ErrorDto("Cart not found!"));
-    }
-
-    @ExceptionHandler(CartIsEmptyException.class)
-    public ResponseEntity<ErrorDto> handleCartIsEmpty() {
-        return ResponseEntity.badRequest().body(new ErrorDto("Cart is empty! Please add products to check out your cart!"));
+    @ExceptionHandler({ CartNotFoundException.class, CartEmptyException.class })
+    public ResponseEntity<ErrorDto> handleCartNotFound(Exception ex) {
+        return ResponseEntity.badRequest().body(new ErrorDto(ex.getMessage()));
     }
 }
