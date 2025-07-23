@@ -1,12 +1,12 @@
-package com.alopez.store.services;
+package com.alopez.store.products.services;
 
-import com.alopez.store.dtos.ProductDto;
-import com.alopez.store.entities.Product;
-import com.alopez.store.exceptions.CategoryNotFoundException;
-import com.alopez.store.exceptions.ProductNotFoundException;
-import com.alopez.store.mappers.ProductMapper;
-import com.alopez.store.repositories.CategoryRepository;
-import com.alopez.store.repositories.ProductRepository;
+import com.alopez.store.products.dtos.ProductDto;
+import com.alopez.store.products.dtos.Product;
+import com.alopez.store.products.exceptions.CategoryNotFoundException;
+import com.alopez.store.products.exceptions.ProductNotFoundException;
+import com.alopez.store.products.mappers.ProductMapper;
+import com.alopez.store.products.repositories.CategoryRepository;
+import com.alopez.store.products.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

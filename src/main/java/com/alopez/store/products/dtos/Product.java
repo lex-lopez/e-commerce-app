@@ -1,4 +1,4 @@
-package com.alopez.store.entities;
+package com.alopez.store.products.dtos;
 
 import jakarta.persistence.*;
 import lombok.*;

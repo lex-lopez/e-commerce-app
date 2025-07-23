@@ -1,7 +1,7 @@
-package com.alopez.store.mappers;
+package com.alopez.store.products.mappers;
 
-import com.alopez.store.dtos.ProductDto;
-import com.alopez.store.entities.Product;
+import com.alopez.store.products.dtos.ProductDto;
+import com.alopez.store.products.dtos.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

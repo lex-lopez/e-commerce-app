@@ -1,10 +1,10 @@
-package com.alopez.store.controllers;
+package com.alopez.store.products.controllers;
 
 import com.alopez.store.dtos.ErrorDto;
-import com.alopez.store.dtos.ProductDto;
-import com.alopez.store.exceptions.CategoryNotFoundException;
-import com.alopez.store.exceptions.ProductNotFoundException;
-import com.alopez.store.services.ProductService;
+import com.alopez.store.products.dtos.ProductDto;
+import com.alopez.store.products.exceptions.CategoryNotFoundException;
+import com.alopez.store.products.exceptions.ProductNotFoundException;
+import com.alopez.store.products.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
