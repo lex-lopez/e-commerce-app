@@ -1,4 +1,4 @@
-package com.alopez.store.validation;
+package com.alopez.store.users.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

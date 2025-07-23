@@ -1,6 +1,6 @@
-package com.alopez.store.repositories;
+package com.alopez.store.users.repositories;
 
-import com.alopez.store.entities.User;
+import com.alopez.store.users.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

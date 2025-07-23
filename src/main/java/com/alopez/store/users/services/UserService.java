@@ -1,14 +1,14 @@
-package com.alopez.store.services;
+package com.alopez.store.users.services;
 
-import com.alopez.store.dtos.RegisterUserRequest;
-import com.alopez.store.dtos.UpdateUserRequest;
-import com.alopez.store.dtos.UserDto;
-import com.alopez.store.entities.Role;
+import com.alopez.store.users.dtos.RegisterUserRequest;
+import com.alopez.store.users.dtos.UpdateUserRequest;
+import com.alopez.store.users.dtos.UserDto;
+import com.alopez.store.users.entities.Role;
 import com.alopez.store.exceptions.EmailAlreadyExistsException;
 import com.alopez.store.exceptions.UserNotAuthorizedException;
 import com.alopez.store.exceptions.UserNotFoundException;
-import com.alopez.store.mappers.UserMapper;
-import com.alopez.store.repositories.UserRepository;
+import com.alopez.store.users.mappers.UserMapper;
+import com.alopez.store.users.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;

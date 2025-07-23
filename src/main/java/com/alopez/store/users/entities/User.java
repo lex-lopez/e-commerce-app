@@ -1,5 +1,6 @@
-package com.alopez.store.entities;
+package com.alopez.store.users.entities;
 
+import com.alopez.store.entities.Product;
 import jakarta.persistence.*;
 import lombok.*;
 

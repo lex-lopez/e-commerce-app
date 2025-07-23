@@ -1,6 +1,6 @@
 package com.alopez.store.services;
 
-import com.alopez.store.repositories.UserRepository;
+import com.alopez.store.users.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

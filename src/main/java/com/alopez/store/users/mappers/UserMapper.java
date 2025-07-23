@@ -1,9 +1,9 @@
-package com.alopez.store.mappers;
+package com.alopez.store.users.mappers;
 
-import com.alopez.store.dtos.RegisterUserRequest;
-import com.alopez.store.dtos.UpdateUserRequest;
-import com.alopez.store.dtos.UserDto;
-import com.alopez.store.entities.User;
+import com.alopez.store.users.dtos.RegisterUserRequest;
+import com.alopez.store.users.dtos.UpdateUserRequest;
+import com.alopez.store.users.dtos.UserDto;
+import com.alopez.store.users.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 

@@ -2,9 +2,9 @@ package com.alopez.store.services;
 
 import com.alopez.store.config.JwtConfig;
 import com.alopez.store.dtos.UserLoginRequest;
-import com.alopez.store.entities.User;
+import com.alopez.store.users.entities.User;
 import com.alopez.store.exceptions.UserNotFoundException;
-import com.alopez.store.repositories.UserRepository;
+import com.alopez.store.users.repositories.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;

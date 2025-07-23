@@ -1,6 +1,6 @@
 package com.alopez.store.services;
 
-import com.alopez.store.entities.Role;
+import com.alopez.store.users.entities.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
-package com.alopez.store.dtos;
+package com.alopez.store.users.dtos;
 
-import com.alopez.store.validation.Lowercase;
+import com.alopez.store.users.validation.Lowercase;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

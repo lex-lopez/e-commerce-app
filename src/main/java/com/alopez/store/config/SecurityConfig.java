@@ -1,6 +1,6 @@
 package com.alopez.store.config;
 
-import com.alopez.store.entities.Role;
+import com.alopez.store.users.entities.Role;
 import com.alopez.store.filters.JwtAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;

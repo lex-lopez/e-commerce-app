@@ -1,4 +1,4 @@
-package com.alopez.store.dtos;
+package com.alopez.store.users.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

@@ -1,10 +1,14 @@
-package com.alopez.store.controllers;
+package com.alopez.store.users.controllers;
 
 import com.alopez.store.dtos.*;
 import com.alopez.store.exceptions.EmailAlreadyExistsException;
 import com.alopez.store.exceptions.UserNotAuthorizedException;
 import com.alopez.store.exceptions.UserNotFoundException;
-import com.alopez.store.services.UserService;
+import com.alopez.store.users.services.UserService;
+import com.alopez.store.users.dtos.ChangePasswordRequest;
+import com.alopez.store.users.dtos.RegisterUserRequest;
+import com.alopez.store.users.dtos.UpdateUserRequest;
+import com.alopez.store.users.dtos.UserDto;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
