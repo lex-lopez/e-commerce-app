@@ -1,13 +1,13 @@
-package com.alopez.store.services;
+package com.alopez.store.carts.services;
 
-import com.alopez.store.dtos.CartDto;
-import com.alopez.store.dtos.CartItemDto;
-import com.alopez.store.entities.Cart;
-import com.alopez.store.exceptions.CartNotFoundException;
-import com.alopez.store.exceptions.ProductNotFoundException;
-import com.alopez.store.mappers.CartMapper;
-import com.alopez.store.repositories.CartRepository;
-import com.alopez.store.repositories.ProductRepository;
+import com.alopez.store.carts.dtos.CartDto;
+import com.alopez.store.carts.dtos.CartItemDto;
+import com.alopez.store.carts.entities.Cart;
+import com.alopez.store.carts.exceptions.CartNotFoundException;
+import com.alopez.store.products.exceptions.ProductNotFoundException;
+import com.alopez.store.carts.mappers.CartMapper;
+import com.alopez.store.carts.repositories.CartRepository;
+import com.alopez.store.products.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

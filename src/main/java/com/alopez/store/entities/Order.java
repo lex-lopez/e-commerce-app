@@ -1,5 +1,6 @@
 package com.alopez.store.entities;
 
+import com.alopez.store.carts.entities.Cart;
 import com.alopez.store.users.entities.User;
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.alopez.store.repositories;
+package com.alopez.store.carts.repositories;
 
-import com.alopez.store.entities.Cart;
+import com.alopez.store.carts.entities.Cart;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

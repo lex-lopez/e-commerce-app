@@ -1,9 +1,13 @@
-package com.alopez.store.controllers;
+package com.alopez.store.carts.controllers;
 
+import com.alopez.store.carts.dtos.AddItemToCartRequest;
+import com.alopez.store.carts.dtos.CartDto;
+import com.alopez.store.carts.dtos.CartItemDto;
+import com.alopez.store.carts.dtos.UpdateCartItemRequest;
 import com.alopez.store.dtos.*;
-import com.alopez.store.exceptions.CartNotFoundException;
-import com.alopez.store.exceptions.ProductNotFoundException;
-import com.alopez.store.services.CartService;
+import com.alopez.store.carts.exceptions.CartNotFoundException;
+import com.alopez.store.products.exceptions.ProductNotFoundException;
+import com.alopez.store.carts.services.CartService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

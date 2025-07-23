@@ -1,9 +1,9 @@
-package com.alopez.store.mappers;
+package com.alopez.store.carts.mappers;
 
-import com.alopez.store.dtos.CartDto;
-import com.alopez.store.dtos.CartItemDto;
-import com.alopez.store.entities.Cart;
-import com.alopez.store.entities.CartItem;
+import com.alopez.store.carts.dtos.CartDto;
+import com.alopez.store.carts.dtos.CartItemDto;
+import com.alopez.store.carts.entities.Cart;
+import com.alopez.store.carts.entities.CartItem;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

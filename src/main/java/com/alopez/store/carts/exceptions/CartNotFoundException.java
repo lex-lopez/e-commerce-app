@@ -1,4 +1,4 @@
-package com.alopez.store.exceptions;
+package com.alopez.store.carts.exceptions;
 
 public class CartNotFoundException extends RuntimeException {
     public CartNotFoundException() { super("Cart not found!");}

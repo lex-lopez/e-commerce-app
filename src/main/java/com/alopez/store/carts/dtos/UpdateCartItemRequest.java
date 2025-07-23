@@ -1,4 +1,4 @@
-package com.alopez.store.dtos;
+package com.alopez.store.carts.dtos;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

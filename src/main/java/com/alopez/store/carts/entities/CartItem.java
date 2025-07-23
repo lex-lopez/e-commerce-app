@@ -1,5 +1,6 @@
-package com.alopez.store.entities;
+package com.alopez.store.carts.entities;
 
+import com.alopez.store.products.dtos.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
