@@ -1,9 +1,9 @@
-package com.alopez.store.controllers;
+package com.alopez.store.orders.controllers;
 
 import com.alopez.store.dtos.ErrorDto;
-import com.alopez.store.dtos.OrderDto;
-import com.alopez.store.exceptions.OrderNotFoundException;
-import com.alopez.store.services.OrderService;
+import com.alopez.store.orders.dtos.OrderDto;
+import com.alopez.store.orders.exceptions.OrderNotFoundException;
+import com.alopez.store.orders.services.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

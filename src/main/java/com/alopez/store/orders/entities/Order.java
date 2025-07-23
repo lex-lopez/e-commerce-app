@@ -1,4 +1,4 @@
-package com.alopez.store.entities;
+package com.alopez.store.orders.entities;
 
 import com.alopez.store.carts.entities.Cart;
 import com.alopez.store.users.entities.User;

@@ -1,10 +1,10 @@
-package com.alopez.store.services;
+package com.alopez.store.orders.services;
 
 import com.alopez.store.auth.services.AuthService;
-import com.alopez.store.dtos.OrderDto;
-import com.alopez.store.exceptions.OrderNotFoundException;
-import com.alopez.store.mappers.OrderMapper;
-import com.alopez.store.repositories.OrderRepository;
+import com.alopez.store.orders.dtos.OrderDto;
+import com.alopez.store.orders.exceptions.OrderNotFoundException;
+import com.alopez.store.orders.mappers.OrderMapper;
+import com.alopez.store.orders.repositories.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;

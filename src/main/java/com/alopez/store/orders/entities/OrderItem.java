@@ -1,4 +1,4 @@
-package com.alopez.store.entities;
+package com.alopez.store.orders.entities;
 
 import com.alopez.store.products.dtos.Product;
 import jakarta.persistence.*;

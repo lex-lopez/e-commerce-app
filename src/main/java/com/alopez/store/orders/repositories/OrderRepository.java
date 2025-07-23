@@ -1,6 +1,6 @@
-package com.alopez.store.repositories;
+package com.alopez.store.orders.repositories;
 
-import com.alopez.store.entities.Order;
+import com.alopez.store.orders.entities.Order;
 import com.alopez.store.users.entities.User;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;

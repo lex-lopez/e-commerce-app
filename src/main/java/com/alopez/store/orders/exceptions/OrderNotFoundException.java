@@ -1,4 +1,4 @@
-package com.alopez.store.exceptions;
+package com.alopez.store.orders.exceptions;
 
 public class OrderNotFoundException extends RuntimeException {
     public OrderNotFoundException() {

@@ -1,6 +1,6 @@
 package com.alopez.store.payments.services;
 
-import com.alopez.store.entities.PaymentStatus;
+import com.alopez.store.orders.entities.PaymentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

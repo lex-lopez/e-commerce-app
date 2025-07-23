@@ -1,6 +1,6 @@
 package com.alopez.store.payments.services;
 
-import com.alopez.store.entities.Order;
+import com.alopez.store.orders.entities.Order;
 
 import java.util.Optional;
 

@@ -1,6 +1,6 @@
-package com.alopez.store.dtos;
+package com.alopez.store.orders.dtos;
 
-import com.alopez.store.entities.PaymentStatus;
+import com.alopez.store.orders.entities.PaymentStatus;
 import lombok.Data;
 
 import java.math.BigDecimal;

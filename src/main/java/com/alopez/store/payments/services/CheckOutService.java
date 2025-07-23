@@ -2,12 +2,12 @@ package com.alopez.store.payments.services;
 
 import com.alopez.store.payments.dtos.CheckOutRequest;
 import com.alopez.store.payments.dtos.CheckOutResponse;
-import com.alopez.store.entities.Order;
+import com.alopez.store.orders.entities.Order;
 import com.alopez.store.carts.exceptions.CartEmptyException;
 import com.alopez.store.carts.exceptions.CartNotFoundException;
 import com.alopez.store.payments.exceptions.PaymentException;
 import com.alopez.store.carts.repositories.CartRepository;
-import com.alopez.store.repositories.OrderRepository;
+import com.alopez.store.orders.repositories.OrderRepository;
 import com.alopez.store.auth.services.AuthService;
 import com.alopez.store.carts.services.CartService;
 import jakarta.transaction.Transactional;

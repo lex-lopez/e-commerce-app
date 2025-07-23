@@ -1,4 +1,4 @@
-package com.alopez.store.entities;
+package com.alopez.store.orders.entities;
 
 public enum PaymentStatus {
     PENDING,

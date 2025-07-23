@@ -1,4 +1,4 @@
-package com.alopez.store.dtos;
+package com.alopez.store.orders.dtos;
 
 import lombok.Data;
 
