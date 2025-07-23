@@ -5,6 +5,7 @@ import com.alopez.store.payments.dtos.CheckOutResponse;
 import com.alopez.store.orders.entities.Order;
 import com.alopez.store.carts.exceptions.CartEmptyException;
 import com.alopez.store.carts.exceptions.CartNotFoundException;
+import com.alopez.store.payments.dtos.WebhookRequest;
 import com.alopez.store.payments.exceptions.PaymentException;
 import com.alopez.store.carts.repositories.CartRepository;
 import com.alopez.store.orders.repositories.OrderRepository;

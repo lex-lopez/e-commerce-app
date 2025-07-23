@@ -1,4 +1,4 @@
-package com.alopez.store.payments.services;
+package com.alopez.store.payments.dtos;
 
 import com.alopez.store.orders.entities.PaymentStatus;
 import lombok.AllArgsConstructor;

@@ -7,7 +7,7 @@ import com.alopez.store.payments.dtos.CheckOutRequest;
 import com.alopez.store.payments.dtos.CheckOutResponse;
 import com.alopez.store.payments.exceptions.PaymentException;
 import com.alopez.store.payments.services.CheckOutService;
-import com.alopez.store.payments.services.WebhookRequest;
+import com.alopez.store.payments.dtos.WebhookRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

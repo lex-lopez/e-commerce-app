@@ -1,9 +1,13 @@
-package com.alopez.store.payments.services;
+package com.alopez.store.payments.services.stripe;
 
 import com.alopez.store.orders.entities.Order;
 import com.alopez.store.orders.entities.OrderItem;
 import com.alopez.store.orders.entities.PaymentStatus;
+import com.alopez.store.payments.dtos.CheckoutSession;
+import com.alopez.store.payments.dtos.PaymentResult;
+import com.alopez.store.payments.dtos.WebhookRequest;
 import com.alopez.store.payments.exceptions.PaymentException;
+import com.alopez.store.payments.services.PaymentGateway;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Event;
