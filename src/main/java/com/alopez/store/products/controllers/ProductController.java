@@ -1,6 +1,6 @@
 package com.alopez.store.products.controllers;
 
-import com.alopez.store.dtos.ErrorDto;
+import com.alopez.store.common.dtos.ErrorDto;
 import com.alopez.store.products.dtos.ProductDto;
 import com.alopez.store.products.exceptions.CategoryNotFoundException;
 import com.alopez.store.products.exceptions.ProductNotFoundException;

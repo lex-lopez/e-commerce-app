@@ -1,4 +1,4 @@
-package com.alopez.store.services;
+package com.alopez.store.auth.services;
 
 import com.alopez.store.users.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class UserAuthService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override

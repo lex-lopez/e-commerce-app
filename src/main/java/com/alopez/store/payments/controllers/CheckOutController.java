@@ -1,6 +1,6 @@
 package com.alopez.store.payments.controllers;
 
-import com.alopez.store.dtos.ErrorDto;
+import com.alopez.store.common.dtos.ErrorDto;
 import com.alopez.store.carts.exceptions.CartEmptyException;
 import com.alopez.store.carts.exceptions.CartNotFoundException;
 import com.alopez.store.payments.dtos.CheckOutRequest;

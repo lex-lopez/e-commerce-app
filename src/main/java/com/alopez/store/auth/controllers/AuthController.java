@@ -1,10 +1,10 @@
 package com.alopez.store.auth.controllers;
 
-import com.alopez.store.dtos.ErrorDto;
+import com.alopez.store.common.dtos.ErrorDto;
 import com.alopez.store.auth.dtos.JwtResponse;
 import com.alopez.store.users.dtos.UserDto;
 import com.alopez.store.auth.dtos.UserLoginRequest;
-import com.alopez.store.exceptions.UserNotFoundException;
+import com.alopez.store.users.exceptions.UserNotFoundException;
 import com.alopez.store.users.mappers.UserMapper;
 import com.alopez.store.auth.services.AuthService;
 import jakarta.servlet.http.HttpServletResponse;

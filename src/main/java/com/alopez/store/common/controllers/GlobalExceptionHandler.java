@@ -1,6 +1,6 @@
-package com.alopez.store.controllers;
+package com.alopez.store.common.controllers;
 
-import com.alopez.store.dtos.ErrorDto;
+import com.alopez.store.common.dtos.ErrorDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;

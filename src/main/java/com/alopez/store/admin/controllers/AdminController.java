@@ -1,4 +1,4 @@
-package com.alopez.store.controllers;
+package com.alopez.store.admin.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

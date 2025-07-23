@@ -1,6 +1,6 @@
 package com.alopez.store.orders.controllers;
 
-import com.alopez.store.dtos.ErrorDto;
+import com.alopez.store.common.dtos.ErrorDto;
 import com.alopez.store.orders.dtos.OrderDto;
 import com.alopez.store.orders.exceptions.OrderNotFoundException;
 import com.alopez.store.orders.services.OrderService;

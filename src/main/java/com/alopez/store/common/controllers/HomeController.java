@@ -1,4 +1,4 @@
-package com.alopez.store.controllers;
+package com.alopez.store.common.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

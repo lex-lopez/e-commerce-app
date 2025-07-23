@@ -3,7 +3,7 @@ package com.alopez.store.auth.services;
 import com.alopez.store.auth.config.JwtConfig;
 import com.alopez.store.auth.dtos.UserLoginRequest;
 import com.alopez.store.users.entities.User;
-import com.alopez.store.exceptions.UserNotFoundException;
+import com.alopez.store.users.exceptions.UserNotFoundException;
 import com.alopez.store.users.repositories.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;

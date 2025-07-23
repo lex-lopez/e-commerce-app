@@ -1,9 +1,9 @@
 package com.alopez.store.users.controllers;
 
-import com.alopez.store.dtos.*;
-import com.alopez.store.exceptions.EmailAlreadyExistsException;
-import com.alopez.store.exceptions.UserNotAuthorizedException;
-import com.alopez.store.exceptions.UserNotFoundException;
+import com.alopez.store.common.dtos.ErrorDto;
+import com.alopez.store.users.exceptions.EmailAlreadyExistsException;
+import com.alopez.store.users.exceptions.UserNotAuthorizedException;
+import com.alopez.store.users.exceptions.UserNotFoundException;
 import com.alopez.store.users.services.UserService;
 import com.alopez.store.users.dtos.ChangePasswordRequest;
 import com.alopez.store.users.dtos.RegisterUserRequest;
