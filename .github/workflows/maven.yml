@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Build and Test - Java CI with Maven
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
 
     steps:
     - name: Checkout
-    - uses: actions/checkout@v4
+      uses: actions/checkout@v4
     
     - name: Set up JDK 17
       uses: actions/setup-java@v4
