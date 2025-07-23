@@ -1,6 +1,6 @@
-package com.alopez.store.filters;
+package com.alopez.store.auth.filters;
 
-import com.alopez.store.services.JwtService;
+import com.alopez.store.auth.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.alopez.store.config;
+package com.alopez.store.auth.config;
 
 import io.jsonwebtoken.security.Keys;
 import lombok.Data;

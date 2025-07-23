@@ -1,7 +1,7 @@
-package com.alopez.store.services;
+package com.alopez.store.auth.services;
 
-import com.alopez.store.config.JwtConfig;
-import com.alopez.store.dtos.UserLoginRequest;
+import com.alopez.store.auth.config.JwtConfig;
+import com.alopez.store.auth.dtos.UserLoginRequest;
 import com.alopez.store.users.entities.User;
 import com.alopez.store.exceptions.UserNotFoundException;
 import com.alopez.store.users.repositories.UserRepository;

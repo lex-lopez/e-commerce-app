@@ -1,5 +1,6 @@
 package com.alopez.store.services;
 
+import com.alopez.store.auth.services.AuthService;
 import com.alopez.store.dtos.OrderDto;
 import com.alopez.store.exceptions.OrderNotFoundException;
 import com.alopez.store.mappers.OrderMapper;

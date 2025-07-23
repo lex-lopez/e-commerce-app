@@ -8,7 +8,7 @@ import com.alopez.store.exceptions.CartNotFoundException;
 import com.alopez.store.payments.exceptions.PaymentException;
 import com.alopez.store.repositories.CartRepository;
 import com.alopez.store.repositories.OrderRepository;
-import com.alopez.store.services.AuthService;
+import com.alopez.store.auth.services.AuthService;
 import com.alopez.store.services.CartService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;

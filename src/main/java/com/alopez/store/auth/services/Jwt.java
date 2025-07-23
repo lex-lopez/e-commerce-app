@@ -1,4 +1,4 @@
-package com.alopez.store.services;
+package com.alopez.store.auth.services;
 
 import com.alopez.store.users.entities.Role;
 import io.jsonwebtoken.Claims;

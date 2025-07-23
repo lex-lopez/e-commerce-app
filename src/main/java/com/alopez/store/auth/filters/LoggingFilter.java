@@ -1,4 +1,4 @@
-package com.alopez.store.filters;
+package com.alopez.store.auth.filters;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

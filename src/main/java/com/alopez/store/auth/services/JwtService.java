@@ -1,6 +1,6 @@
-package com.alopez.store.services;
+package com.alopez.store.auth.services;
 
-import com.alopez.store.config.JwtConfig;
+import com.alopez.store.auth.config.JwtConfig;
 import com.alopez.store.users.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
