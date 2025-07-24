@@ -54,9 +54,16 @@ public class SecurityConfig {
                     c.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless sessions (token-based authentication)
             .csrf(AbstractHttpConfigurer::disable) // Disable CSRF
             .authorizeHttpRequests(c -> c // Authorize
+                    .requestMatchers("/swagger-ui/**").permitAll()
+                    .requestMatchers("/swagger-ui.html").permitAll()
+                    .requestMatchers("/v3/api-docs/**").permitAll()
                     .requestMatchers("/api/carts/**").permitAll()
                     .requestMatchers("/api/admin/**").hasRole(Role.ADMIN.name())
                     .requestMatchers(HttpMethod.POST,"/api/users").permitAll()
+                    .requestMatchers(HttpMethod.GET,"/api/products/**").permitAll()
+                    .requestMatchers(HttpMethod.POST,"/api/products/**").hasRole(Role.ADMIN.name())
+                    .requestMatchers(HttpMethod.PUT,"/api/products/**").hasRole(Role.ADMIN.name())
+                    .requestMatchers(HttpMethod.DELETE,"/api/products/**").hasRole(Role.ADMIN.name())
                     .requestMatchers(HttpMethod.POST,"/api/auth/login").permitAll()
                     .requestMatchers(HttpMethod.POST,"/api/auth/refresh").permitAll()
                     .requestMatchers(HttpMethod.POST,"/api/checkout/webhook").permitAll()
