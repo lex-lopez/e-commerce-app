@@ -34,9 +34,9 @@ public class StripePaymentGateway implements PaymentGateway {
         try {
             var builder = SessionCreateParams.builder()
                     .setMode(SessionCreateParams.Mode.PAYMENT)
-                    .setSuccessUrl( websiteUrl + "/checkout-success?orderId=" + order.getId())
-                    .setCancelUrl( websiteUrl + "/checkout-cancel")
-                    .putMetadata("order_id", order.getId().toString());
+                    .setSuccessUrl(websiteUrl + "/checkout-success?orderId=" + order.getId())
+                    .setCancelUrl(websiteUrl + "/checkout-cancel")
+                    .setPaymentIntentData(createPaymentIntentData(order));
 
             order.getItems().forEach(item -> {
                 var lineItem = createLineItem(item);
@@ -61,10 +61,10 @@ public class StripePaymentGateway implements PaymentGateway {
 
             return switch (event.getType()) {
                 case "payment_intent.succeeded" ->
-                    Optional.of(new PaymentResult(extractOrderId(event), PaymentStatus.PAID));
+                        Optional.of(new PaymentResult(extractOrderId(event), PaymentStatus.PAID));
 
                 case "payment_intent.payment_failed" ->
-                    Optional.of(new PaymentResult(extractOrderId(event), PaymentStatus.FAILED));
+                        Optional.of(new PaymentResult(extractOrderId(event), PaymentStatus.FAILED));
 
                 default -> Optional.empty();
             };
@@ -72,6 +72,11 @@ public class StripePaymentGateway implements PaymentGateway {
             throw new PaymentException("Signature verification failed, please check webhook secret.");
         }
 
+    }
+
+    private SessionCreateParams.PaymentIntentData createPaymentIntentData(Order order) {
+        return SessionCreateParams.PaymentIntentData.builder()
+                .putMetadata("order_id", order.getId().toString()).build();
     }
 
     private Long extractOrderId(Event event) {
