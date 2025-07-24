@@ -1,4 +1,4 @@
-package com.alopez.store.admin.config;
+package com.alopez.store.common.rules;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;

@@ -1,16 +1,15 @@
-package com.alopez.store.admin.config;
-
+package com.alopez.store.users.config;
 
 import com.alopez.store.common.rules.SecurityRules;
-import com.alopez.store.users.entities.Role;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AdminSecurityRules implements SecurityRules {
+public class UserSecurityRules implements SecurityRules {
     @Override
     public void configure(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry) {
-        registry.requestMatchers("/api/admin/**").hasRole(Role.ADMIN.name());
+        registry.requestMatchers(HttpMethod.POST,"/api/users").permitAll();
     }
 }
