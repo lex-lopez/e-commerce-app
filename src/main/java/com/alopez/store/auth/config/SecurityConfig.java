@@ -1,11 +1,10 @@
 package com.alopez.store.auth.config;
 
-import com.alopez.store.users.entities.Role;
+import com.alopez.store.common.rules.SecurityRules;
 import com.alopez.store.auth.filters.JwtAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -22,12 +21,15 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final List<SecurityRules> featureSecurityRules;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -50,27 +52,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .sessionManagement(c ->
-                    c.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless sessions (token-based authentication)
-            .csrf(AbstractHttpConfigurer::disable) // Disable CSRF
-            .authorizeHttpRequests(c -> c // Authorize
-                    .requestMatchers("/swagger-ui/**").permitAll()
-                    .requestMatchers("/swagger-ui.html").permitAll()
-                    .requestMatchers("/v3/api-docs/**").permitAll()
-                    .requestMatchers("/api/carts/**").permitAll()
-                    .requestMatchers("/api/admin/**").hasRole(Role.ADMIN.name())
-                    .requestMatchers(HttpMethod.POST,"/api/users").permitAll()
-                    .requestMatchers(HttpMethod.GET,"/api/products/**").permitAll()
-                    .requestMatchers(HttpMethod.POST,"/api/products/**").hasRole(Role.ADMIN.name())
-                    .requestMatchers(HttpMethod.PUT,"/api/products/**").hasRole(Role.ADMIN.name())
-                    .requestMatchers(HttpMethod.DELETE,"/api/products/**").hasRole(Role.ADMIN.name())
-                    .requestMatchers(HttpMethod.POST,"/api/auth/login").permitAll()
-                    .requestMatchers(HttpMethod.POST,"/api/auth/refresh").permitAll()
-                    .requestMatchers(HttpMethod.POST,"/api/checkout/webhook").permitAll()
-                    .anyRequest().authenticated()
-            )
+                .sessionManagement(c ->
+                        c.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless sessions (token-based authentication)
+                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF
+                .authorizeHttpRequests(c -> { // Authorize
+                    featureSecurityRules.forEach(rule -> rule.configure(c));
+                    c.anyRequest().authenticated();
+                })
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling( c -> {
+                .exceptionHandling(c -> {
                     c.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
                     c.accessDeniedHandler((request, response, accessDeniedException) -> {
                         response.setStatus(HttpStatus.FORBIDDEN.value());
