@@ -48,4 +48,4 @@ jobs:
         cache: maven
         
     - name: Run Integration Tests
-      run: mvn -B verify -DskipUnitTests
+      run: mvn -B verify -DskipUnitTests=true
